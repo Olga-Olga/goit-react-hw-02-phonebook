@@ -1,17 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 
-export class Contacts extends React.Component {
+export class Contacts extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
     name: '',
     number: '',
-    filter: '',
   };
 
   handleChangeInputName = event => {
@@ -23,30 +16,6 @@ export class Contacts extends React.Component {
     // event.target.value
     this.setState({ number: event.target.value });
     console.log(event.target.value);
-  };
-
-  handleAddContact = () => {
-    this.setState(prevState => ({
-      contacts: [
-        ...prevState.contacts,
-        { id: nanoid(), name: prevState.name, number: prevState.number },
-      ],
-    }));
-    console.log(this.state);
-  };
-
-  handleFilter = event => {
-    // console.log(event.target.value);
-    this.setState({ filter: event.target.value });
-  };
-
-  handleFilterContacts = () => {
-    const fil = this.state.contacts.filter(el => {
-      return el.name.includes(this.state.filter);
-    });
-
-    // console.log(fil);
-    return fil;
   };
 
   render() {
@@ -70,27 +39,6 @@ export class Contacts extends React.Component {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
-        <button onClick={this.handleAddContact}>Add contact</button>
-        <input value={this.state.filter} onChange={this.handleFilter}></input>
-        <ul>
-          {this.state.contacts.map(el => {
-            return (
-              <li key={el.id}>
-                {el.name} {el.number}
-              </li>
-            );
-          })}
-        </ul>
-        <ul>
-          {this.handleFilterContacts().map(el => {
-            return (
-              <li key={el.id}>
-                {el.name} {el.number}
-              </li>
-            );
-          })}
-          {console.log(this.handleFilterContacts())}
-        </ul>
       </div>
     );
   }
