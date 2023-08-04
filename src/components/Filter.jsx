@@ -7,5 +7,4 @@ const Filter = ({ value, onChangeFilterValue }) => {
     </div>
   );
 };
-
 export default Filter;
