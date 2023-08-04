@@ -29,7 +29,7 @@ export class App extends React.Component {
     const filter = this.state.filter.toLowerCase();
     const filterdContacts = this.state.contacts.filter(el => {
       const name = el.name.toLowerCase();
-      return name.includes(this.state.filter);
+      return name.includes(filter);
     });
     return filterdContacts;
   };
