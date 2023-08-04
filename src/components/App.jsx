@@ -26,14 +26,22 @@ export class App extends React.Component {
   };
 
   getFilteredData = () => {
+    const filter = this.state.filter.toLowerCase();
     const filterdContacts = this.state.contacts.filter(el => {
-      return el.name.includes(this.state.filter);
+      const name = el.name.toLowerCase();
+      return name.includes(this.state.filter);
     });
     return filterdContacts;
   };
 
   handleFilter = event => {
     this.setState({ filter: event.target.value });
+  };
+
+  handleDelete = id => {
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(el => el.id !== id),
+    }));
   };
 
   render() {
@@ -47,7 +55,7 @@ export class App extends React.Component {
           onChangeFilterValue={this.handleFilter}
           value={this.state.filter}
         />
-        <ContactList paramList={filteredData} />
+        <ContactList paramList={filteredData} onDelete={this.handleDelete} />
       </div>
     );
   }
