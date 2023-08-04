@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 export default class ContactsForm extends Component {
   state = { name: '', number: '' };
 
-  handleChangeInputName = event => {
-    this.setState({ name: event.target.value });
-  };
-
-  handleChangeInputNumber = event => {
-    this.setState({ number: event.target.value });
+  handleChangeInput = ({ target: { name, value } }) => {
+    this.setState({ [name]: value });
   };
 
   handleFormSubmit = event => {
@@ -25,7 +21,8 @@ export default class ContactsForm extends Component {
       <form onSubmit={this.handleFormSubmit}>
         <h2>Name</h2>
         <input
-          onChange={this.handleChangeInputName}
+          onChange={this.handleChangeInput}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           type="text"
           name="name"
           value={this.state.name}
@@ -34,11 +31,11 @@ export default class ContactsForm extends Component {
         />
         <h2>number</h2>
         <input
-          onChange={this.handleChangeInputNumber}
+          onChange={this.handleChangeInput}
           type="tel"
           name="number"
           value={this.state.number}
-          // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
@@ -49,5 +46,5 @@ export default class ContactsForm extends Component {
 }
 
 ContactsForm.propTypes = {
-  handleFormSubmit: PropTypes.func.isRequired,
+  handleAddContact: PropTypes.func.isRequired,
 };
