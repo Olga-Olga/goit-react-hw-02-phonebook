@@ -16,9 +16,13 @@ export class App extends React.Component {
   };
 
   handleAddContact = newContact => {
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, { id: nanoid(), ...newContact }],
-    }));
+    const res = this.state.contacts.some(el => el.name === newContact.name);
+
+    res
+      ? alert(`Name ${newContact.name} has already in the list`)
+      : this.setState(prevState => ({
+          contacts: [...prevState.contacts, { id: nanoid(), ...newContact }],
+        }));
   };
 
   getFilteredData = () => {

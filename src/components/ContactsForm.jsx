@@ -16,7 +16,6 @@ export default class ContactsForm extends Component {
     const name = event.target.name.value;
     const number = event.target.number.value;
     console.log(this.props);
-
     this.props.handleAddContact({ name, number });
   };
 
