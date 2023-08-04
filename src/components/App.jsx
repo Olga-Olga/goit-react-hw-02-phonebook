@@ -1,4 +1,6 @@
-import { Contacts } from '../components/Contacts';
+import ContactList from './ContactList';
+import ContactsForm from './ContactsForm';
+import Filter from './Filter';
 import React from 'react';
 import { nanoid } from 'nanoid';
 
@@ -10,58 +12,51 @@ export class App extends React.Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    name: '',
-    number: '',
     filter: '',
   };
 
-  handleAddContact = () => {
+  handleAddContact = newContact => {
     this.setState(prevState => ({
-      contacts: [
-        ...prevState.contacts,
-        { id: nanoid(), name: prevState.name, number: prevState.number },
-      ],
+      contacts: [...prevState.contacts, { id: nanoid(), ...newContact }],
     }));
-    console.log(this.state);
+  };
+
+  getFilteredData = () => {
+    const filterdContacts = this.state.contacts.filter(el => {
+      return el.name.includes(this.state.filter);
+    });
+    return filterdContacts;
   };
 
   handleFilter = event => {
     this.setState({ filter: event.target.value });
   };
 
-  handleFilterContacts = () => {
-    const fil = this.state.contacts.filter(el => {
-      return el.name.includes(this.state.filter);
-    });
-
-    return fil;
-  };
-
   render() {
+    const filteredData = this.getFilteredData();
     return (
       <div>
-        <Contacts />
-        <button onClick={this.handleAddContact}>Add contact</button>
-        <input value={this.state.filter} onChange={this.handleFilter}></input>
-        {/* <ul>
-          {this.state.contacts.map(el => {
-            return (
-              <li key={el.id}>
-                {el.name} {el.number}
-              </li>
-            );
-          })}
-        </ul> */}
-        <ul>
-          {this.handleFilterContacts().map(el => {
-            return 123;
-            // <li key={el.id}>
-            //   {el.name} {el.number}
-            // </li>
-          })}
-          {console.log(this.handleFilterContacts())}
-        </ul>
+        <h1>Phonebook</h1>
+        <ContactsForm handleAddContact={this.handleAddContact} />
+        <h2>Contacts</h2>
+        <Filter
+          onChangeFilterValue={this.handleFilter}
+          value={this.state.filter}
+        />
+        <ContactList paramList={filteredData} />
       </div>
     );
   }
 }
+
+//     <div>
+//       <ul>{this.handleFilterContacts().map(el => {
+//             return (
+//               <li key={el.id}>
+//                 {el.name} {el.number}
+//               </li>
+//             )
+//           })
+//         }
+//  </ul>
+//     </div>;
